@@ -11,10 +11,14 @@ $PAGE->set_context($context);
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('standard');
 
+if(!has_capability('local/omegasync:adminview', $context)){
+	print_error('Faltan permisos.');
+}
+
 //breadcrumbs
-$PAGE->navbar->add('Administración del sitio');
+$PAGE->navbar->add('AdministraciÃ³n del sitio');
 $PAGE->navbar->add('UAI');
-$PAGE->navbar->add('Sincronización con omega');
+$PAGE->navbar->add('SincronizaciÃ³n con omega');
 
 $action = optional_param('action', 'view_table', PARAM_TEXT);
 $urlCrearEvento = new moodle_url('/local/omegasync/crear.php');
@@ -38,7 +42,7 @@ if($action == 'change_state'){
 		$estado = 'Inactivo';
 	}
 	$action = 'view_table';
-	echo '<div class="alert alert-info">Se ha cambiado exitosamente el estado a '.$estado.' al Periodo Académico: '.$pAcademicoName.'</div>';
+	echo '<div class="alert alert-info">Se ha cambiado exitosamente el estado a '.$estado.' al Periodo AcadÃ©mico: '.$pAcademicoName.'</div>';
 }
 
 if($action == 'state_delete'){
@@ -47,7 +51,7 @@ if($action == 'state_delete'){
 	$deletepAcademico = $DB->delete_records('webc_omega', array('omegasync_id'=>$pAcademicoToDelete));
 	if($deletepAcademico == TRUE){
 		$action = 'view_table';
-		echo '<div class="alert alert-danger">Se ha eliminado exitosamente el Periodo Académico: '.$pAcademicoName.'</div>';
+		echo '<div class="alert alert-danger">Se ha eliminado exitosamente el Periodo AcadÃ©mico: '.$pAcademicoName.'</div>';
 	}
 }
 if($action == 'view_table'){
@@ -57,6 +61,7 @@ echo $OUTPUT->single_button($urlCrearEvento, 'Crear Evento');
 }
 
 echo $OUTPUT->footer();
+
 ?>
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/table_filter.js"></script>
