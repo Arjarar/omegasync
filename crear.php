@@ -11,10 +11,14 @@ $PAGE->set_context($context);
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('standard');
 
+if(!has_capability('local/omegasync:adminview', $context)){
+	print_error('Faltan permisos.');
+}
+
 //breadcrumbs
-$PAGE->navbar->add('Administración del sitio');
+$PAGE->navbar->add('AdministraciÃ³n del sitio');
 $PAGE->navbar->add('UAI');
-$PAGE->navbar->add('Sincronización con omega');
+$PAGE->navbar->add('SincronizaciÃ³n con omega');
 $PAGE->navbar->add('Crear');
 
 $urlBack = new moodle_url('/local/omegasync/index.php');
@@ -40,22 +44,22 @@ if($fromform = $mform->get_data()){
 				$addRecords = $DB->insert_record('webc_omega', array('omegasync_id'=>$pAcademicoId));
 				if($addRecords){
 					echo '<div class="alert alert-success">Se ha creado exitosamente el Periodo Academico: '.$pAcademicoName->periodo_academico.'</div>';
-					echo $OUTPUT->single_button($urlForm, 'Volver');
+					echo $OUTPUT->single_button($urlBack, 'Volver');
 				}else{
 					echo '<div class="alert alert-danger">Ha ocurrido un error en el sistema, por favor contacte a un Administrador</div>';
-					echo $OUTPUT->single_button($urlForm, 'Volver');
+					echo $OUTPUT->single_button($urlBack, 'Volver');
 				}
 			}else{
 				echo '<div class="alert alert-danger">Error: Se debe seleccionar una Facultad</div>';
-				echo $OUTPUT->single_button($urlForm, 'Volver');
+				echo $OUTPUT->single_button($urlBack, 'Volver');
 			}
 		}else{
-			echo '<div class="alert alert-danger">Error: Se debe seleccionar un Período Academico</div>';
-			echo $OUTPUT->single_button($urlForm, 'Volver');
+			echo '<div class="alert alert-danger">Error: Se debe seleccionar un PerÃ­odo Academico</div>';
+			echo $OUTPUT->single_button($urlBack, 'Volver');
 		}
 	}else{
 		echo '<div class="alert alert-danger">Error: Registro ya existe en la base de datos</div>';
-		echo $OUTPUT->single_button($urlForm, 'Volver');
+		echo $OUTPUT->single_button($urlBack, 'Volver');
 		
 	}
 	
@@ -67,10 +71,8 @@ if($fromform = $mform->get_data()){
 
 
 echo $OUTPUT->footer();
+
 ?>
 
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/ajax_filter.js"></script>
-
-
-  
