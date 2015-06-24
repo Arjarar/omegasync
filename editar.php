@@ -11,10 +11,14 @@ $PAGE->set_context($context);
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('standard');
 
+if(!has_capability('local/omegasync:adminview', $context)){
+	print_error('Faltan permisos.');
+}
+
 //breadcrumbs
-$PAGE->navbar->add('Administración del sitio');
+$PAGE->navbar->add('AdministraciÃ³n del sitio');
 $PAGE->navbar->add('UAI');
-$PAGE->navbar->add('Sincronización con omega');
+$PAGE->navbar->add('SincronizaciÃ³n con omega');
 $PAGE->navbar->add('Editar');
 
 $pAcademicoIdTable = required_param('pAcademicoId', PARAM_INT);
@@ -44,7 +48,7 @@ $mform = new editform($urlForm);
 			echo $OUTPUT->single_button($urlBack, 'Volver');
 		}
 		if($edit == TRUE){
-			echo '<div class="alert alert-success">El periodo ha sido editado con éxito</div>';
+			echo '<div class="alert alert-success">El periodo ha sido editado con Ã©xito</div>';
 			echo $OUTPUT->single_button($urlBack, 'Volver');
 		}
 	}else{
@@ -52,8 +56,3 @@ $mform = new editform($urlForm);
 		$mform->display();
 		echo $OUTPUT->single_button($urlBack, 'Volver');
 	}
-
-echo $OUTPUT->footer();
-?>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/ajax_filter.js"></script>
